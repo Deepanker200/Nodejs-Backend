@@ -6,3 +6,6 @@
     "dev":"nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
+
+# req.query~ It is for "?" query parameters
+# req.params~ For dynamic ids

@@ -1,67 +1,39 @@
 const express = require("express");
 const { adminAuth } = require("./middlewares/auth");
 const { dummyMiddleware } = require("./middlewares/dummyMiddleware");
+const connectDB = require("./config/database");
+const User = require("./models/user");
 
 const app = express();        //Calling the function
 
-// app.use("/user",(req,res,next)=>{
-//     console.log("Respone 1")
-//     next()      //IT transfer the calling of API res.send will be called after it
-//     res.send("1st response API")    //this make set headers after they are sent to client error!
+app.post("/signup",async(req,res)=>{
+    const userObj={
+        firstName:"Virat",
+        lastName:"Kohli",
+        emailId:"virat@gmail.com",
+        password:"Virat123"
+    };
 
-//     //Route Handler
-// },(req,res,next)=>{
-//     console.log("Response 2");
-//     next()
-//     res.send("2nd response API")
-// })
+    //User is a collection
+    const user= new User(userObj)
 
-
-
-//Middlewares
-
-//Handle Auth Middleware for all requests
-
-
-app.use("/admin",adminAuth)
-
-app.get("/admin/getAdmin", (req, res) => {
-    res.send("Admin logged in")
-})
-
-
-app.get("/admin/deleteAdmin", (req, res) => {
-    res.send("Admin deleted in")
-})
-
-app.use("/dummy",dummyMiddleware);
-
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        res.status(500).send("Something went wrong")
+    try{
+        await user.save()
+        res.send("User Added Successfully")
+    }
+    catch(err){
+        res.status(400).send("Error saving the user: "+err.message)
     }
 })
 
 
 
-app.get("/dummy/login",(req,res)=>{
-    // try{
-        throw new Error("DASads")
-        res.send("Dummy Login Successfully")
-    // }catch(err){
-    //     res.status(500).send("Some 500 Error")
-    // }
-})
 
-
-app.use("/",(err,req,res,next)=>{
-    if(err){
-        res.status(500).send("Something went wrong")
-    }
-})
-
-
-
-app.listen(7777, () => {
+connectDB().then(() => {
+    console.log("DB connection established...");
+    app.listen(7777, () => {
     console.log("Server is successfully listening on port 7777...");
+})
+}).catch(err => {
+    console.error("DB cannot connected!");
 })

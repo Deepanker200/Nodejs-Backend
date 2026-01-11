@@ -9,11 +9,3 @@
 
 # req.query~ It is for "?" query parameters
 # req.params~ For dynamic ids
-
-# Middleware
-  - If next() without res.send()~ Cannot get /user
-  - If no res.send() or next() then infinte loop
-
-# Note: First create schema then model
-  - db.collection("User").find() or User.find() both are same but different syntax
-  - .mongodb.net/devTinders ~ Correct way

@@ -22,9 +22,10 @@ const app = express();        //Calling the function
 
 //Handle Auth Middleware for all requests
 
-
+//1st
 app.use("/admin",adminAuth)
 
+//2nd
 app.get("/admin/getAdmin", (req, res) => {
     res.send("Admin logged in")
 })

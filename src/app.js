@@ -6,16 +6,19 @@ const User = require("./models/user");
 
 const app = express();        //Calling the function
 
+app.use(express.json());
+
+
 app.post("/signup",async(req,res)=>{
-    const userObj={
-        firstName:"Virat",
-        lastName:"Kohli",
-        emailId:"virat@gmail.com",
-        password:"Virat123"
-    };
+    // const userObj={
+    //     firstName:"Virat",
+    //     lastName:"Kohli",
+    //     emailId:"virat@gmail.com",
+    //     password:"Virat123"
+    // };
 
     //User is a collection
-    const user= new User(userObj)
+    const user= new User(req.body)
 
     try{
         await user.save()

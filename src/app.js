@@ -30,6 +30,30 @@ app.post("/signup",async(req,res)=>{
 })
 
 
+app.get("/user",async(req,res)=>{
+    const userEmail=req.body.emailId;
+try{
+    const user=await User.find({emailId:userEmail})
+    if(user.length===0){
+        res.status(404).send("No user found!")
+    }else{
+        res.send(user)
+    }
+}catch(err){
+    res.status(400).send("Something went wrong")
+}
+})
+
+// Feed API
+app.get("/feed",async(req,res)=>{
+    try{
+        res.send(await User.find({}))
+    }catch(err){
+        res.status(400).send("Something went wrong!!")
+    }
+})
+
+
 
 
 connectDB().then(() => {

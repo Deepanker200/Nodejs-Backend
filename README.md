@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 
+# Note: DB Connection name then collection name inside it
+
 # req.query~ It is for "?" query parameters
 # req.params~ For dynamic ids
 

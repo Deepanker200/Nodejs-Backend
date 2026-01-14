@@ -47,7 +47,7 @@ app.get("/user", async (req, res) => {
 // Feed API
 app.get("/feed", async (req, res) => {
     try {
-        res.send(await User.findOne({}))
+        res.send(await User.find())
     } catch (err) {
         res.status(400).send("Something went wrong!!")
     }
@@ -83,13 +83,15 @@ app.patch("/user", async (req, res) => {
         const userDetails = await User.findById(userId)
         // console.log(userDetails);
 
-        await User.findByIdAndUpdate({ _id: userId }, data)
+        await User.findByIdAndUpdate({ _id: userId }, 
+            data,
+            {runValidators:true})
         // console.log(userUpdate);
 
         res.send("User Details updated successfully");
 
     } catch (err) {
-        res.status(400).send("Something went wrong!")
+        res.status(400).send("UPDATE FAILED: "+err.message)
     }
 })
 

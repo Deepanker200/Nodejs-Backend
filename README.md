@@ -24,3 +24,5 @@
 # express.json()~ For converting JSON into JS object
 
 # Validate on schema not on patch will work only for new document inserted we use runValidators in API to do this
+
+# npm i validator~ For validation

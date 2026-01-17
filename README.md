@@ -26,3 +26,4 @@
 # Validate on schema not on patch will work only for new document inserted we use runValidators in API to do this
 
 # npm i validator~ For validation
+- In Mongoose, schema validation runs automatically for create and save, but NOT for update operations unless runValidators: true is used.

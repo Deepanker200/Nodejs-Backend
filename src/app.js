@@ -3,7 +3,7 @@ const { adminAuth } = require("./middlewares/auth");
 const { dummyMiddleware } = require("./middlewares/dummyMiddleware");
 const connectDB = require("./config/database");
 const User = require("./models/user");
-
+const { validateSignUpData } = require("./utils/validation")
 const app = express();        //Calling the function
 
 app.use(express.json());
@@ -16,11 +16,14 @@ app.post("/signup", async (req, res) => {
     //     emailId:"virat@gmail.com",
     //     password:"Virat123"
     // };
-
-    //User is a collection
-    const user = new User(req.body)
-
     try {
+        //Validation of Data
+        validateSignUpData(req)
+
+
+        //User is a collection
+        const user = new User(req.body)
+
         await user.save()
         res.send("User Added Successfully")
     }
@@ -83,7 +86,7 @@ app.patch("/user/:userId", async (req, res) => {
     try {
 
         const ALLOWED_UPDATES = [
-           "photoUrl", "about", "gender", "age", "skills"
+            "photoUrl", "about", "gender", "age", "skills"
         ]
 
         const isUpdateAllowed = Object.keys(data).every((k) =>
@@ -95,7 +98,7 @@ app.patch("/user/:userId", async (req, res) => {
         }
 
 
-        if(data?.skills?.length>10){
+        if (data?.skills?.length > 10) {
             throw new Error("Skills cannot be more than 10")
         }
 

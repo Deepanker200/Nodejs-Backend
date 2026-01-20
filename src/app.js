@@ -1,5 +1,4 @@
 const express = require("express");
-const { adminAuth } = require("./middlewares/auth");
 const { dummyMiddleware } = require("./middlewares/dummyMiddleware");
 const connectDB = require("./config/database");
 const User = require("./models/user");
@@ -55,6 +54,13 @@ app.post("/login", async (req, res) => {
         const isPasswordValid = bcrypt.compare(password, user.password)
 
         if (isPasswordValid) {
+
+            //Create a JWT Token
+
+
+            //Add the token to cookie and send the response back to the user
+            res.cookie("token","itsacookie")
+
             res.send("Login Successfully")
         }
         else {

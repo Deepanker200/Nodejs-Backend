@@ -3,12 +3,13 @@ const { dummyMiddleware } = require("./middlewares/dummyMiddleware");
 const connectDB = require("./config/database");
 const User = require("./models/user");
 const { validateSignUpData } = require("./utils/validation")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 const app = express();        //Calling the function
 
 app.use(express.json());
-
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
     // const userObj={
@@ -42,9 +43,9 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
     try {
-        const { emailIds, password } = req.body;
+        const { emailId, password } = req.body;
 
-        const user = await User.findOne({ emailId: emailIds });
+        const user = await User.findOne({ emailId: emailId });
 
         if (!user) {
             throw new Error("EmailId is not present in DB")
@@ -59,7 +60,7 @@ app.post("/login", async (req, res) => {
 
 
             //Add the token to cookie and send the response back to the user
-            res.cookie("token","itsacookie")
+            res.cookie("token", "itsacookie")
 
             res.send("Login Successfully")
         }
@@ -71,6 +72,17 @@ app.post("/login", async (req, res) => {
     } catch (err) {
         res.status(400).send("ERROR : " + err.message)
     }
+})
+
+
+app.get("/profile", async (req, res) => {
+    const cookies = req.cookies;
+
+    const { token } = cookies;
+    
+
+    console.log(cookies);
+    res.send("Reading cookie: " + cookies)
 })
 
 app.get("/user", async (req, res) => {

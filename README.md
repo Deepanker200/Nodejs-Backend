@@ -19,6 +19,8 @@
 # Note: First create schema then model
   - db.collection("User").find() or User.find() both are same but different syntax
   - .mongodb.net/devTinders ~ Correct way
+  - 🔴 Do NOT use {} when a method expects a single value (ID)
+
 
 # JSON Keys uses quotes ("") whereas JS Object Keys doesn't use them
 # express.json()~ For converting JSON into JS object
@@ -27,3 +29,5 @@
 
 # npm i validator~ For validation in MongoDB Schema & Express too
 - In Mongoose, schema validation runs automatically for create and save, but NOT for update operations unless runValidators: true is used.
+
+# JWT= Header + Payload + Signature

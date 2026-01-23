@@ -1,5 +1,4 @@
 const express = require("express");
-const { dummyMiddleware } = require("./middlewares/dummyMiddleware");
 const connectDB = require("./config/database");
 const User = require("./models/user");
 const { validateSignUpData } = require("./utils/validation")
@@ -80,10 +79,16 @@ app.post("/login", async (req, res) => {
 
 
 app.get("/profile", async (req, res) => {
+    
+    try{
     const cookies = req.cookies;
 
     const { token } = cookies;
     
+    if(!token){
+        throw new Error("Invalid Token")
+    }
+
     const decodedMessage=await jwt.verify(token,"DEV@Tinder790")
 
     const {_id}=decodedMessage;
@@ -91,11 +96,17 @@ app.get("/profile", async (req, res) => {
 
     console.log(decodedMessage);
     const user=await User.findById(_id);
+    if(!user){
+        throw new Error("User doesn't exists")
+    }
     // console.log(user.firstName);
     
 
     // console.log(cookies);
     res.send("Reading cookie: " + user)
+}catch(err){
+    res.status(400).send("ERROR : "+err.message)
+}
 })
 
 app.get("/user", async (req, res) => {

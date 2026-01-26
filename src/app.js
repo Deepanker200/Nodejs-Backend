@@ -4,8 +4,6 @@ const { dummyMiddleware } = require("./middlewares/dummyMiddleware");
 const connectDB = require("./config/database");
 const User = require("./models/user");
 const { validateSignUpData } = require("./utils/validation")
-const bcrypt = require("bcrypt")
-
 const app = express();        //Calling the function
 
 app.use(express.json());
@@ -21,17 +19,10 @@ app.post("/signup", async (req, res) => {
     try {
         //Validation of Data
         validateSignUpData(req)
-        const { firstName, lastName, emailId, password } = req.body;
-
-        //Encrpyt the password
-        const passwordHash = await bcrypt.hash(password, 10)
-        // console.log(passwordHash);
 
 
         //User is a collection
-        const user = new User({
-            firstName, lastName, emailId, password: passwordHash
-        })
+        const user = new User(req.body)
 
         await user.save()
         res.send("User Added Successfully")
@@ -40,6 +31,7 @@ app.post("/signup", async (req, res) => {
         res.status(400).send("Error saving the user: " + err.message)
     }
 })
+
 
 app.get("/user", async (req, res) => {
     const userEmail = req.body.emailId;

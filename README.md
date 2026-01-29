@@ -34,3 +34,8 @@
  - While verifying cookie we must check
  - 1. Token
  - 2. Check whether the user is present in DB or not
+
+ # Notes: Used schema validation methods
+  - Remember this keyword 
+  - Why User.getJWT() won’t work    !!IMP
+    - getJWT is not a static method on the model, it’s a method on a document.

@@ -30,7 +30,7 @@
 # npm i validator~ For validation in MongoDB Schema & Express too
 - In Mongoose, schema validation runs automatically for create and save, but NOT for update operations unless runValidators: true is used.
 
-# JWT= Header + Payload + Signature
+# JWT= Header + Payload + Signature, JWT supports stateless authentication 
  - While verifying cookie we must check
  - 1. Token
  - 2. Check whether the user is present in DB or not

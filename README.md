@@ -39,3 +39,5 @@
   - Remember this keyword 
   - Why User.getJWT() won’t work    !!IMP
     -> getJWT is not a static method on the model, it’s a method on a document.
+
+- MongoDB has a 24-character hexadecimal string

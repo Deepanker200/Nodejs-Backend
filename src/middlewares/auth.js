@@ -15,7 +15,7 @@ const userAuth = async (req, res, next) => {
         }
         const decodedObject = await jwt.verify(token, "DEV@Tinder$790")
 
-        console.log(decodedObject);
+        // console.log(decodedObject);
         
 
 

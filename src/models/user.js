@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema({
 )
 
 userSchema.methods.getJWT = async function () {
-    const user = this;  //refers to the object we can access
+    const user = this;  //this refers to the current Mongoose Document we can access
     //Create a JWT Token
 
     const token = await jwt.sign({ _id: user._id }, "DEV@Tinder$790", {

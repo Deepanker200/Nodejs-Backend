@@ -43,15 +43,38 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
             .populate("toUserId", USER_SAFE_DATA)
 
 
-            
+
         const data = connectionData.map((row) => {
-            if(row.fromUserId._id.toString()===loggedInUser._id.toString()){
+            if (row.fromUserId._id.toString() === loggedInUser._id.toString()) {
                 return row.toUserId
             }
-            return row.fromUserId 
-    })
+            return row.fromUserId
+        })
 
         res.json({ message: "Connections Details: ", data })
+
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+
+userRouter.get("/feed", userAuth, async (req, res) => {
+    try {
+        const loggedInUser = req.user;
+
+        const data = await ConnectionRequest.find(
+            {
+               $or:[{ fromUserId: loggedInUser._id},{toUserId:loggedInUser._id}],
+                // status: {
+                //     $nin: ["interested", "accepted", "ignored", "rejected"]
+                // }
+            }
+        )
+        .select("fromUserId toUserId")
+        .populate("fromUserId", "firstName")
+        .populate("toUserId", "firstName")
+
+        res.json({ data: "Data fetched successully: ", message: data })
 
     } catch (err) {
         res.status(400).json({ message: err.message })

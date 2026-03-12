@@ -19,11 +19,43 @@ const profileRouter = require("./routes/profile")
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
 
+// app.use("/user",(req,res,next)=>{
+//     console.log("Respone 1")
+//     next()      //IT transfer the calling of API res.send will be called after it
+//     res.send("1st response API")    //this make set headers after they are sent to client error!
+
+//     //Route Handler
+// },(req,res,next)=>{
+//     console.log("Response 2");
+//     // next()
+//     // res.send("2nd response API")
+// })
+
+app.use("/",(req,res)=>{
+    
+    res.send("No Route Caught");
+})
+
+app.use("/nn",(req,res)=>{
+    
+    res.send("NN Caught");
+})
+
 app.use("/", authRouter)
 app.use("/", profileRouter)
 app.use("/", requestRouter)
 app.use("/", userRouter)
 
+
+app.get("/test1",(req,res)=>{
+    const search=req.query;
+    res.send(search);
+})
+
+app.get("/test2/:id/:user",(req,res)=>{
+    console.log(req.params);
+    res.send(`This user is ${id}`);
+})
 
 connectDB().then(() => {
     console.log("DB connection established...");

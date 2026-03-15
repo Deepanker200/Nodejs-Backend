@@ -11,6 +11,8 @@ app.use(cors({
     credentials: true
 }))
 
+
+//Reads JSON and convert it into JavaScript Object
 app.use(express.json());
 app.use(cookieParser());
 

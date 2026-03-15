@@ -74,6 +74,8 @@ const userSchema = new mongoose.Schema({
 
 // userSchema.index({ firstName: 1, lastName: 1 })
 
+
+// These are schema instance methods
 userSchema.methods.getJWT = async function () {
     const user = this;  //this refers to the current Mongoose Document we can access
     //Create a JWT Token
